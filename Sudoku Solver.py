@@ -45,6 +45,22 @@ class SudokuSolver():
             return sudoku
         return None
 
+    def printSudoku(self, sudoku):
+        rowCount = 0
+        for row in sudoku:
+            if rowCount % 3 == 0:
+                print()
+            columnCount = 0
+            for cell in row:
+                if columnCount % 3 == 0:
+                    print("  ", end="")
+                if cell == 0:
+                    cell = "-"
+                print(cell, end=" ")
+                columnCount += 1
+            rowCount += 1
+            print()
+
     def checkValidity(self, sudoku):
         for rowIndex in range(len(sudoku)):
             if not self.checkRow(rowIndex, sudoku):
@@ -100,11 +116,12 @@ class SudokuSolver():
         sudokuName = sudoku["sudokuName"]
         sudokuMatrix = sudoku["sudokuMatrix"]
         print(sudokuName.upper())
-        print(sudokuMatrix)
+        self.printSudoku(sudokuMatrix)
         print()
         print("Solving...")
         startTime = time.time()
-        print(self.backtrack(sudokuMatrix))
+        solvedSudoku = self.backtrack(sudokuMatrix)
+        self.printSudoku(solvedSudoku)
         endTime = time.time()
         secondsElapsed = endTime - startTime
         print(f"Solved in {secondsElapsed:.3f} seconds")
